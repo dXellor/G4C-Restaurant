@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/restaurant/items")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ItemController {
 
     @Autowired
