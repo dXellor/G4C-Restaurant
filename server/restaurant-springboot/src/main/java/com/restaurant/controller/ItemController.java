@@ -3,6 +3,7 @@ package com.restaurant.controller;
 import com.restaurant.model.Item;
 import com.restaurant.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.env.RandomValuePropertySourceEnvironmentPostProcessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,19 @@ public class ItemController {
     public ResponseEntity<Item> addItem(@RequestBody Item newItem){
         Item item = itemService.addItem(newItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Boolean> deleteItem(@PathVariable Long id){
+        Boolean didItWork = itemService.deleteItem(id);
+        return new ResponseEntity<>(didItWork, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item item){
+        item.setId(id);
+        Item updatedItem = itemService.addItem(item);
+
+        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
     }
 }

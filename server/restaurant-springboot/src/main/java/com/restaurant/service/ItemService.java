@@ -24,4 +24,22 @@ public class ItemService {
     public Item addItem(Item newItem){
         return itemRepository.save(newItem);
     }
+
+    public Boolean deleteItem(Long id){
+        Boolean flag = doesItemExist(id);
+        if(flag){
+            itemRepository.deleteById(id);
+        }
+        return flag;
+    }
+
+    private Boolean doesItemExist(Long id){
+        Boolean flag = false;
+        Item item = itemRepository.findById(id).get();
+        if( item != null){
+            flag = true;
+        }
+
+        return flag;
+    }
 }
