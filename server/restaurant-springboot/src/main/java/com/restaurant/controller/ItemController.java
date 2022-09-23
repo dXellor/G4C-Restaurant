@@ -51,4 +51,10 @@ public class ItemController {
 
         return new ResponseEntity<>(updatedItem, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/filter", method = RequestMethod.GET, params = "fname")
+    public ResponseEntity<List<Item>> getItemByName(@RequestParam String fname){
+        List<Item> items = itemService.findByName(fname);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
 }

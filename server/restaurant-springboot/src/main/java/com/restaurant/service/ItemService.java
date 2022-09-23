@@ -33,6 +33,10 @@ public class ItemService {
         return flag;
     }
 
+    public List<Item> findByName(String name){
+        return itemRepository.findByNameContainingIgnoreCase(name);
+    }
+
     private Boolean doesItemExist(Long id){
         Boolean flag = false;
         Item item = itemRepository.findById(id).get();
