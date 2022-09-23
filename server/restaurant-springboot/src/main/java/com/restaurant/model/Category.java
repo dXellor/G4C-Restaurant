@@ -11,12 +11,12 @@ public class Category {
     private Long id;
 
     @Column(nullable = false)
-    private long cname;
+    private String cname;
 
     public Category() {
     }
 
-    public Category(Long id, long cname) {
+    public Category(Long id, String cname) {
         this.id = id;
         this.cname = cname;
     }
@@ -29,11 +29,11 @@ public class Category {
         this.id = id;
     }
 
-    public long getCname() {
+    public String getCname() {
         return cname;
     }
 
-    public void setCname(long cname) {
+    public void setCname(String cname) {
         this.cname = cname;
     }
 

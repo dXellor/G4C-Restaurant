@@ -12,7 +12,9 @@ public class Item {
 
     @Column(nullable = false)
     private String name;
-//    private
+
+    @ManyToOne
+    private Category category;
 
     @Column(nullable = false)
     private float price;
