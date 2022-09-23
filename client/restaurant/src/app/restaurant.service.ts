@@ -15,12 +15,6 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit(){
-    this.getAllItems().subscribe(res => {
-      console.log(res);
-    });
-  }
-
   getAllItems() : Observable<Item[]>{
     return this.http.get<Item[]>(this.itemApiUrl);
   }
