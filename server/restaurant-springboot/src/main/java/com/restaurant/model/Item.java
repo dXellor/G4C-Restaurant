@@ -1,5 +1,7 @@
 package com.restaurant.model;
 
+import org.hibernate.engine.internal.Cascade;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +15,7 @@ public class Item {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category;
 
     @Column(nullable = false)
@@ -22,9 +24,10 @@ public class Item {
     public Item() {
     }
 
-    public Item(Long id, String name, float price) {
+    public Item(Long id, String name, Category cat, float price) {
         this.id = id;
         this.name = name;
+        this.category = cat;
         this.price = price;
     }
 
