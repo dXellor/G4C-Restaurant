@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListItemsComponent } from './list-items/list-items.component';
 import { HomeViewComponent } from './home-view/home-view.component';
+import { AddUpdateFormComponent } from './add-update-form/add-update-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListItemsComponent,
-    HomeViewComponent
+    HomeViewComponent,
+    AddUpdateFormComponent
   ],
   imports: [
     BrowserModule,

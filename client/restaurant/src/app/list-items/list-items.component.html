@@ -1,15 +1,21 @@
-<h2 style="color: red;">Item list</h2><br>
 <table class="table table-striped">
     <thead class="thead-dark">
         <th scope="col">Name</th>
         <th scope="col">Category</th>
         <th scope="col">Price</th>
+        <th scope="col">Action</th>
     </thead>
     <tbody>
         <tr *ngFor="let item of itemList; let i = index">
             <td>{{item.name}}</td>
             <td>{{item.category.cname}}</td>
             <td>{{item.price}}</td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-danger" style="border: 1px solid black">Delete</button>
+                    <button class="btn" style="border: 1px solid black">Update</button>
+                </div>
+            </td>
         </tr>
     </tbody>
 </table>
