@@ -1,14 +1,21 @@
 <div>
+    <div *ngIf="message.show" class="alert alert-warning">
+        {{message.body}}
+    </div><br>
     <label><b>Name</b></label>
-    <input class="form-control" name="input-name"><br>
+    <input class="form-control" name="input-name" [(ngModel)]="itemBind.name"><br>
     <label><b>Category</b></label>
-    <input class="form-control" name="input-category"><br>
+    <!-- <input class="form-control" name="input-category" [(ngModel)]="itemBind.category"><br> -->
+    <select class="form-select" [(ngModel)]="itemBind.category">
+        <option [value]="" selected="selected">--Choose item category--</option>
+        <option *ngFor="let c of categoryList" [value]="c">{{c.cname}}</option>
+    </select><br>
     <label><b>Price</b></label>
-    <input class="form-control" name="input-price"><br>
+    <input class="form-control" type="number" name="input-price" [(ngModel)]="itemBind.price"><br>
     <div class="row align-items-end">
         <div class="col-md-4 btn-group">
             <button class="btn btn-warning" style="border: 1px solid black">Reset</button>
-            <button class="btn" style="border: 1px solid black">Save</button>
+            <button class="btn" style="border: 1px solid black" (click)="saveItem()">Save</button>
         </div>
     </div>
 </div>

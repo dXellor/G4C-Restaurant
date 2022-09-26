@@ -15,10 +15,22 @@ export class ListItemsComponent implements OnInit {
     this.itemList = [];
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     this.restaurantService.getAllItems().subscribe(res => {
       this.itemList = res;
     });
+  }
+
+  deleteItem(id: Number | undefined): void{
+    console.log(id);
+    this.restaurantService.removeItem(id).subscribe(res => {
+      console.log(res);
+      this.ngOnInit();
+    });
+  }
+
+  sendItemToUpdateForm(item: Item): void{
+    this.restaurantService.setItemForUpdate(item);
   }
 
 }
