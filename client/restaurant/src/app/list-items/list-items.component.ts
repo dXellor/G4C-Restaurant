@@ -15,7 +15,14 @@ export class ListItemsComponent implements OnInit {
     this.itemList = [];
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void{    
+    this.getItemTable();
+    this.restaurantService.tableRefreshTrigger.subscribe(ret => {
+      this.getItemTable();
+    });
+  }
+
+  getItemTable(): void{
     this.restaurantService.getAllItems().subscribe(res => {
       this.itemList = res;
     });
@@ -25,12 +32,13 @@ export class ListItemsComponent implements OnInit {
     console.log(id);
     this.restaurantService.removeItem(id).subscribe(res => {
       console.log(res);
-      this.ngOnInit();
+      this.getItemTable();
     });
   }
 
   sendItemToUpdateForm(item: Item): void{
-    this.restaurantService.setItemForUpdate(item);
+    let newItem: Item = Object.assign({}, item);
+    this.restaurantService.setItemForUpdate(newItem);
   }
 
 }

@@ -46,7 +46,7 @@ public class ItemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item item){
-        item.setId(id);
+        item.setId(id); //Not necessary, we are passing thru whole item from frontend
         Item updatedItem = itemService.addItem(item);
 
         return new ResponseEntity<>(updatedItem, HttpStatus.OK);

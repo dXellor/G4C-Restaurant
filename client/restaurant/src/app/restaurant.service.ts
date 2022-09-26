@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Item, ItemInterface } from './models/model-item';
+import { Item } from './models/model-item';
 import { Category } from './models/model-category';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class RestaurantService {
   public itemForUpdate: Observable<Item>;
   private itemSubject: Subject<Item>;
 
+  //
+  private tableRefreshSubject: Subject<void>;
+  public tableRefreshTrigger: Observable<void>;
+
   HttpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -24,6 +28,9 @@ export class RestaurantService {
   constructor(private http: HttpClient) {
     this.itemSubject = new Subject<Item>();
     this.itemForUpdate = this.itemSubject.asObservable();
+
+    this.tableRefreshSubject = new Subject<void>();
+    this.tableRefreshTrigger = this.tableRefreshSubject.asObservable();
   }
 
   //API communication functions
@@ -43,15 +50,17 @@ export class RestaurantService {
     return this.http.post<Item>(this.itemApiUrl, item);
   }
 
+  updateItem(item: Item): Observable<Item>{
+    return this.http.put<Item>(`${this.itemApiUrl}/${item.id}`, item);
+  }
+
   //Other Service functions
   setItemForUpdate(item: Item): void{
-    console.log("Service station: " + item);
     this.itemSubject.next(item);
   }
 
-  getItemForUpdate(): Observable<Item>{
-    return this.itemForUpdate;
+  triggerTableRefresh(): void{
+    this.tableRefreshSubject.next();
   }
-  
 
 }

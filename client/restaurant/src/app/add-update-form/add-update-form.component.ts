@@ -32,27 +32,42 @@ export class AddUpdateFormComponent implements OnInit {
       this.categoryList = res;
     });
     
-    this.restaurantService.getItemForUpdate().subscribe(item => {
+    this.restaurantService.itemForUpdate.subscribe(item => {
       this.itemBind = item;
     });
   }
 
   saveItem(): void{
 
-    console.log(this.itemBind.id);
-    return;
-
-    if(this.itemBind.name === '' || this.itemBind.category === undefined || typeof(this.itemBind.price) !== "number"){
-      this.message.body = "Warning, submit unvalid data again, and you will be purged from existence";
+    if(this.itemBind.name === '' || this.itemBind.category === undefined || this.itemBind.price < 1){
+      // this.message.body = "Warning, submit unvalid data again and you will be purged from existence";
+      this.resetForm();
+      this.message.body = "Unvalid data submited";
       this.message.show = true;
       return;
     }
 
-    this.restaurantService.addItem(this.itemBind).subscribe(res => {
-      this.restaurantService.getAllItems();
-    });
+    if(this.itemBind.id !== undefined){
+      this.restaurantService.updateItem(this.itemBind).subscribe(res => {
+        this.restaurantService.triggerTableRefresh();
+      });
+    }else{
+      this.restaurantService.addItem(this.itemBind).subscribe(res => {
+        this.restaurantService.triggerTableRefresh();
+      });
+    }
+
+    this.resetForm();
+  }
+
+  resetForm(){
+    this.message = {
+      body: '',
+      show: false
+    }
 
     this.itemBind = {
+      id: undefined,
       name: "",
       category: {
         cname: ""
