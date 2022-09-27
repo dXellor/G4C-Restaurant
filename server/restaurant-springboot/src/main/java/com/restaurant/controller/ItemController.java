@@ -4,6 +4,8 @@ import com.restaurant.model.Item;
 import com.restaurant.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.env.RandomValuePropertySourceEnvironmentPostProcessor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,8 @@ public class ItemController {
     ItemService itemService;
 
     @RequestMapping(value = "",  method = RequestMethod.GET)
-    public ResponseEntity<List<Item>> getAllItems(){
-        List<Item> items = itemService.getAll();
+    public ResponseEntity<Page<Item>> getAllItems(Pageable pageInfo){
+        Page<Item> items = itemService.getAll(pageInfo);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
@@ -46,7 +48,7 @@ public class ItemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item item){
-        item.setId(id); //Not necessary, we are passing thru whole item from frontend
+        item.setId(id); //Not necessary, we are passing through whole item from frontend
         Item updatedItem = itemService.addItem(item);
 
         return new ResponseEntity<>(updatedItem, HttpStatus.OK);

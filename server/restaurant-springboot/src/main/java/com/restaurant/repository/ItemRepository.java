@@ -8,7 +8,7 @@ import org.yaml.snakeyaml.events.Event;
 import java.util.List;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>{
 
     public List<Item> findByNameContainingIgnoreCase(String name);
 }

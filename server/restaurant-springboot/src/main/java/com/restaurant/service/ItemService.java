@@ -3,6 +3,9 @@ package com.restaurant.service;
 import com.restaurant.model.Item;
 import com.restaurant.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +16,8 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public List<Item> getAll(){
-        return itemRepository.findAll();
+    public Page<Item> getAll(Pageable pageInfo){
+        return itemRepository.findAll(pageInfo);
     }
 
     public Item getItemById(Long id){

@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { ListItemsComponent } from './list-items/list-items.component';
 import { HomeViewComponent } from './home-view/home-view.component';
 import { AddUpdateFormComponent } from './add-update-form/add-update-form.component';
+import { TableHeaderComponent } from './table-header/table-header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListItemsComponent,
     HomeViewComponent,
-    AddUpdateFormComponent
+    AddUpdateFormComponent,
+    TableHeaderComponent
   ],
   imports: [
     BrowserModule,

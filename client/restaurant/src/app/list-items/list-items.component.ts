@@ -24,7 +24,8 @@ export class ListItemsComponent implements OnInit {
 
   getItemTable(): void{
     this.restaurantService.getAllItems().subscribe(res => {
-      this.itemList = res;
+      this.restaurantService.setTotalPages(res.totalPages)
+      this.itemList = res.content;
     });
   }
 

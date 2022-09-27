@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Item } from './models/model-item';
 import { Category } from './models/model-category';
+import { PageChoice, pagedItemInterface } from './models/model-pagedItem';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,11 @@ export class RestaurantService {
   //API urls
   private itemApiUrl = "http://localhost:8080/api/restaurant/items";
   private categoryApiUrl = "http://localhost:8080/api/restaurant/categories";
+
+  //Page related variables
+  private page: number;
+  private size: number;
+  private totalPages: number;
 
   //Shared item for transfering data between nodes on the same level
   public itemForUpdate: Observable<Item>;
@@ -31,6 +37,10 @@ export class RestaurantService {
 
     this.tableRefreshSubject = new Subject<void>();
     this.tableRefreshTrigger = this.tableRefreshSubject.asObservable();
+    
+    this.page = 0;
+    this.totalPages = 0;
+    this.size = 5;
   }
 
   //API communication functions
@@ -38,8 +48,12 @@ export class RestaurantService {
     return this.http.get<Category[]>(this.categoryApiUrl);
   }
 
-  getAllItems() : Observable<Item[]>{
-    return this.http.get<Item[]>(this.itemApiUrl);
+  getAllItems() : Observable<pagedItemInterface>{
+    let pageParams = new HttpParams();
+    pageParams = pageParams.append('page', this.page);
+    pageParams = pageParams.append('size', this.size);
+
+    return this.http.get<pagedItemInterface>(this.itemApiUrl, {params: pageParams});
   }
 
   removeItem(id: Number | undefined): Observable<Object>{
@@ -61,6 +75,21 @@ export class RestaurantService {
 
   triggerTableRefresh(): void{
     this.tableRefreshSubject.next();
+  }
+
+  getNewPage(flag: PageChoice){
+    if(flag === PageChoice.PREVIOUS && this.page > 0){
+      this.page--;
+    }else if(flag === PageChoice.NEXT && this.page < this.totalPages - 1){
+      // console.log("Total: " + this.totalPages + " Current: " +  this.page);
+      this.page++;
+    }
+
+    this.triggerTableRefresh();
+  }
+
+  setTotalPages(numberOfPages: number){
+    this.totalPages = numberOfPages;
   }
 
 }
