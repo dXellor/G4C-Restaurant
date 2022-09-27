@@ -36,8 +36,8 @@ public class ItemService {
         return flag;
     }
 
-    public List<Item> findByName(String name){
-        return itemRepository.findByNameContainingIgnoreCase(name);
+    public Page<Item> findByName(String name, Pageable pageInfo){
+        return itemRepository.findByNameContainingIgnoreCase(name, pageInfo);
     }
 
     private Boolean doesItemExist(Long id){

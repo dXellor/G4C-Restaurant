@@ -6,9 +6,9 @@
     <input class="form-control" name="input-name" [(ngModel)]="itemBind.name"><br>
     <label><b>Category</b></label>
     <!-- <input class="form-control" name="input-category" [(ngModel)]="itemBind.category"><br> -->
-    <select class="form-select" [(ngModel)]="itemBind.category">
-        <option [value]="" selected="selected">--Choose item category--</option>
-        <option *ngFor="let c of categoryList" [value]="c">{{c.cname}}</option>
+    <select class="form-select" [(ngModel)]="itemBind.category.cname">
+        <option value="" selected="selected">--Choose item category--</option>
+        <option *ngFor="let c of categoryList" [value]="c.cname">{{c.cname}}</option>
     </select><br>
     <label><b>Price</b></label>
     <input class="form-control" type="number" name="input-price" [(ngModel)]="itemBind.price"><br>

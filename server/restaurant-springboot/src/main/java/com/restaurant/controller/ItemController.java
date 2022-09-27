@@ -1,6 +1,8 @@
 package com.restaurant.controller;
 
+import com.restaurant.model.Category;
 import com.restaurant.model.Item;
+import com.restaurant.service.CategoryService;
 import com.restaurant.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.env.RandomValuePropertySourceEnvironmentPostProcessor;
@@ -21,6 +23,8 @@ public class ItemController {
 
     @Autowired
     ItemService itemService;
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping(value = "",  method = RequestMethod.GET)
     public ResponseEntity<Page<Item>> getAllItems(Pageable pageInfo){
@@ -36,6 +40,8 @@ public class ItemController {
 
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Item> addItem(@RequestBody Item newItem){
+        Category category = categoryService.getByName(newItem.getCategory().getCname());
+        newItem.getCategory().setId(category.getId());
         Item item = itemService.addItem(newItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
@@ -55,8 +61,8 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.GET, params = "fname")
-    public ResponseEntity<List<Item>> getItemByName(@RequestParam String fname){
-        List<Item> items = itemService.findByName(fname);
+    public ResponseEntity<Page<Item>> getItemByName(Pageable pageInfo, @RequestParam String fname){
+        Page<Item> items = itemService.findByName(fname, pageInfo);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 }

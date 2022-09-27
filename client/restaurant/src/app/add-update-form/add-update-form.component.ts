@@ -39,7 +39,7 @@ export class AddUpdateFormComponent implements OnInit {
 
   saveItem(): void{
 
-    if(this.itemBind.name === '' || this.itemBind.category === undefined || this.itemBind.price < 1){
+    if(this.itemBind.name === '' || this.itemBind.category.cname === '' || this.itemBind.price < 1){
       // this.message.body = "Warning, submit unvalid data again and you will be purged from existence";
       this.resetForm();
       this.message.body = "Unvalid data submited";

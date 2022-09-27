@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../models/model-item';
 import { RestaurantService } from '../restaurant.service';
+import { getItemOption } from '../restaurant.service';
 
 @Component({
   selector: 'app-list-items',
@@ -18,13 +19,26 @@ export class ListItemsComponent implements OnInit {
   ngOnInit(): void{    
     this.getItemTable();
     this.restaurantService.tableRefreshTrigger.subscribe(ret => {
-      this.getItemTable();
+      if(ret === ''){
+        this.getItemTable();
+      }else{
+        this.getFilteredItemTable();
+      }
+      
     });
   }
 
   getItemTable(): void{
     this.restaurantService.getAllItems().subscribe(res => {
-      this.restaurantService.setTotalPages(res.totalPages)
+      this.restaurantService.setTotalPages(res.totalPages);
+      this.itemList = res.content;
+    });
+  }
+
+  getFilteredItemTable(): void{
+    this.restaurantService.filterItems().subscribe(res => {
+      console.log(res);
+      this.restaurantService.setTotalPages(res.totalPages);
       this.itemList = res.content;
     });
   }

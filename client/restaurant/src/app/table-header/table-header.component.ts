@@ -9,14 +9,22 @@ import { PageChoice } from '../models/model-pagedItem';
 })
 export class TableHeaderComponent implements OnInit {
 
+  public filterValue: string;
   public pageChoice = PageChoice;
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(private restaurantService: RestaurantService) {
+    this.filterValue = '';
+  }
 
   ngOnInit(): void {
   }
 
   nextPage(flag: PageChoice){
     this.restaurantService.getNewPage(flag);
+  }
+
+  filterItems(){
+    this.restaurantService.setFilter(this.filterValue)
+    this.restaurantService.triggerTableRefresh();
   }
 }

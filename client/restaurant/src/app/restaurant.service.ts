@@ -24,8 +24,9 @@ export class RestaurantService {
   private itemSubject: Subject<Item>;
 
   //
-  private tableRefreshSubject: Subject<void>;
-  public tableRefreshTrigger: Observable<void>;
+  private tableRefreshSubject: Subject<string>;
+  public tableRefreshTrigger: Observable<string>;
+  private filter: string;
 
   HttpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,9 +36,10 @@ export class RestaurantService {
     this.itemSubject = new Subject<Item>();
     this.itemForUpdate = this.itemSubject.asObservable();
 
-    this.tableRefreshSubject = new Subject<void>();
+    this.tableRefreshSubject = new Subject<string>();
     this.tableRefreshTrigger = this.tableRefreshSubject.asObservable();
-    
+    this.filter = '';
+
     this.page = 0;
     this.totalPages = 0;
     this.size = 5;
@@ -68,13 +70,22 @@ export class RestaurantService {
     return this.http.put<Item>(`${this.itemApiUrl}/${item.id}`, item);
   }
 
+  filterItems(): Observable<pagedItemInterface>{
+    let pageParams = new HttpParams();
+    pageParams = pageParams.append('page', this.page);
+    pageParams = pageParams.append('size', this.size);
+    pageParams = pageParams.append('fname', this.filter);
+
+    return this.http.get<pagedItemInterface>(`${this.itemApiUrl}/filter`, {params: pageParams});
+  }
+
   //Other Service functions
   setItemForUpdate(item: Item): void{
     this.itemSubject.next(item);
   }
 
   triggerTableRefresh(): void{
-    this.tableRefreshSubject.next();
+    this.tableRefreshSubject.next(this.filter);
   }
 
   getNewPage(flag: PageChoice){
@@ -92,4 +103,13 @@ export class RestaurantService {
     this.totalPages = numberOfPages;
   }
 
+  setFilter(f: string): void{
+    this.filter = f;
+  }
+
+}
+
+export enum getItemOption {
+  ALL,
+  FILTER
 }

@@ -15,7 +15,7 @@ public class Item {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Category category;
 
     @Column(nullable = false)
