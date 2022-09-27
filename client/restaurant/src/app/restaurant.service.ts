@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Item } from './models/model-item';
 import { Category } from './models/model-category';
 import { PageChoice, pagedItemInterface } from './models/model-pagedItem';
+import { User } from './models/model-user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class RestaurantService {
   //API urls
   private itemApiUrl = "http://localhost:8080/api/restaurant/items";
   private categoryApiUrl = "http://localhost:8080/api/restaurant/categories";
+  private loginApiUrl = "http://localhost:8080/api/restaurant/login";
 
   //Page related variables
   private page: number;
@@ -77,6 +79,11 @@ export class RestaurantService {
     pageParams = pageParams.append('fname', this.filter);
 
     return this.http.get<pagedItemInterface>(`${this.itemApiUrl}/filter`, {params: pageParams});
+  }
+
+  //Login
+  loginUser(user: User): Observable<Boolean>{
+    return this.http.post<Boolean>(this.loginApiUrl, user);
   }
 
   //Other Service functions

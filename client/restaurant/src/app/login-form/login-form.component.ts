@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/model-user';
+import { RestaurantService } from '../restaurant.service';
 
 @Component({
   selector: 'app-login-form',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor() { }
+  public userBind: User;
+
+  constructor(private restaurantService: RestaurantService) {
+    this.userBind = {
+      username: '',
+      password: ''
+    }
+  }
 
   ngOnInit(): void {
+  }
+
+  userLogin(){
+    console.log("pozvan");
+    this.restaurantService.loginUser(this.userBind).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

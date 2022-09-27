@@ -1,1 +1,15 @@
-<p>login-form works!</p>
+<h2>Login Page</h2>
+<div class="row">
+    <div class="col-md-5">
+        <form (ngSubmit)="userLogin()">
+            <label>Username:</label>
+            <input class="form-control" name="username" [(ngModel)]="userBind.username">
+
+            <label>Password:</label>
+            <input class="form-control" name="password" type="password" [(ngModel)]="userBind.password">
+
+            <br>
+            <button class="btn btn-danger" type="submit">Log in</button>
+        </form>
+    </div>
+</div>

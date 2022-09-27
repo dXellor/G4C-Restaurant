@@ -16,10 +16,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Boolean> loginUser(@RequestBody User user){
         Boolean retVal = userService.loginUser(user);
 
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }
+
+
