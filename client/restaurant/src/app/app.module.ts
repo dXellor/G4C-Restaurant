@@ -9,6 +9,9 @@ import { ListItemsComponent } from './list-items/list-items.component';
 import { HomeViewComponent } from './home-view/home-view.component';
 import { AddUpdateFormComponent } from './add-update-form/add-update-form.component';
 import { TableHeaderComponent } from './table-header/table-header.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { TableHeaderComponent } from './table-header/table-header.component';
     ListItemsComponent,
     HomeViewComponent,
     AddUpdateFormComponent,
-    TableHeaderComponent
+    TableHeaderComponent,
+    LoginFormComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
