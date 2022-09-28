@@ -29,7 +29,6 @@ export class LoginFormComponent implements OnInit {
     this.restaurantService.loginUser(this.userBind).subscribe(res => {
       if(res){
         localStorage.setItem('loggedIn', this.userBind.username);
-        this.restaurantService.triggerLoging(true);
         this.router.navigate(['main']);
       }else{
         this.message.body = "Invalid credentials";

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Item } from '../models/model-item';
 import { RestaurantService } from '../restaurant.service';
 import { getItemOption } from '../restaurant.service';
@@ -11,7 +11,7 @@ import { getItemOption } from '../restaurant.service';
 export class ListItemsComponent implements OnInit {
 
   public itemList: Item[];
-  public loggedIn: Boolean;
+  @Input() loggedIn: Boolean;
 
   constructor(private restaurantService: RestaurantService) {
     this.itemList = [];

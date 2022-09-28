@@ -15,10 +15,11 @@ export class HomeViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restaurantService.logingTriger.subscribe(flag => {
-      this.isLoggedIn = flag;
-      console.log(this.isLoggedIn);
-    });
+    if(localStorage.getItem('loggedIn') !== null){
+      this.isLoggedIn = true;
+    }else{
+      this.isLoggedIn = false;
+    }
   }
 
 }
