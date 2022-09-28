@@ -25,10 +25,14 @@ export class RestaurantService {
   public itemForUpdate: Observable<Item>;
   private itemSubject: Subject<Item>;
 
-  //
+  //Filter
   private tableRefreshSubject: Subject<string>;
   public tableRefreshTrigger: Observable<string>;
   private filter: string;
+
+  //User Login/Logout trigger
+  private logingSubject: Subject<Boolean>;
+  public logingTriger: Observable<Boolean>;
 
   HttpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -45,6 +49,9 @@ export class RestaurantService {
     this.page = 0;
     this.totalPages = 0;
     this.size = 5;
+
+    this.logingSubject = new Subject<Boolean>();
+    this.logingTriger = this.logingSubject.asObservable();
   }
 
   //API communication functions
@@ -93,6 +100,10 @@ export class RestaurantService {
 
   triggerTableRefresh(): void{
     this.tableRefreshSubject.next(this.filter);
+  }
+  
+  triggerLoging(flag: Boolean): void{
+    this.logingSubject.next(flag);
   }
 
   getNewPage(flag: PageChoice){

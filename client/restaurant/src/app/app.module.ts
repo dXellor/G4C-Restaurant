@@ -12,6 +12,7 @@ import { TableHeaderComponent } from './table-header/table-header.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ContactComponent } from './contact/contact.component';
     TableHeaderComponent,
     LoginFormComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

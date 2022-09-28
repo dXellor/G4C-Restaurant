@@ -1,6 +1,9 @@
 <h2>Login Page</h2>
 <div class="row">
     <div class="col-md-5">
+        <div *ngIf="message.show" class="alert alert-warning">
+            {{message.body}}
+        </div><br>
         <form (ngSubmit)="userLogin()">
             <label>Username:</label>
             <input class="form-control" name="username" [(ngModel)]="userBind.username">

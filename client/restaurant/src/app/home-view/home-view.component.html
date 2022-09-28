@@ -1,9 +1,13 @@
 <div class="row">
-    <div class="col-md-8">
+    <div  class="col-md-8">
         <app-table-header></app-table-header><br>
         <app-list-items></app-list-items>
     </div>
-    <div class="col-md-4">
+    <!-- ngIf odbija da funkcionise, i kada je isLoggedIn true i kada je false ne radi -->
+    <!-- Na svaku promenu logina u konzoli se ispise true (ulogovan) ili false (neulogovan) -->
+    <!-- U navbaru imam isti nacin za prikazivanje Login/Logout opcije i tamo radi -->
+    <!-- Moguce je da se opcija za login promeni pre nego sto se stranica renderuje jer je asinhrono, ali ni pri reloadu gde se loggedIn ne menja ne renderuje ovaj div-->
+    <div *ngIf="isLoggedIn" class="col-md-4"> 
         <app-add-update-form></app-add-update-form>
     </div>
 </div>

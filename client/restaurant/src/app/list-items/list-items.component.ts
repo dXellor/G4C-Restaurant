@@ -11,6 +11,7 @@ import { getItemOption } from '../restaurant.service';
 export class ListItemsComponent implements OnInit {
 
   public itemList: Item[];
+  public loggedIn: Boolean;
 
   constructor(private restaurantService: RestaurantService) {
     this.itemList = [];
