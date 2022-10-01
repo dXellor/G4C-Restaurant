@@ -11,19 +11,22 @@ export class NavbarComponent implements OnInit {
 
   public isLoggedIn: Boolean;
 
-  constructor(private router: Router){
+  constructor(private restaurantService: RestaurantService){
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('loggedIn') !== null){
+    this.restaurantService.logingTriger.subscribe(flag => {
+      this.isLoggedIn = flag;
+    });
+
+    if(localStorage.getItem('username') !== null){
       this.isLoggedIn = true;
-    }else{
-      this.isLoggedIn = false;
     }
   }
 
   logoutUser(){
     localStorage.removeItem('loggedIn');
+    this.isLoggedIn = false;
     window.location.reload();
   }
 

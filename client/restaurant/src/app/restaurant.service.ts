@@ -21,6 +21,9 @@ export class RestaurantService {
   private size: number;
   private totalPages: number;
 
+  private pageSubject: Subject<number[]>;
+  public pageTrigger: Observable<number[]>;
+
   //Shared item for transfering data between nodes on the same level
   public itemForUpdate: Observable<Item>;
   private itemSubject: Subject<Item>;
@@ -49,6 +52,8 @@ export class RestaurantService {
     this.page = 0;
     this.totalPages = 0;
     this.size = 5;
+    this.pageSubject = new Subject<number[]>();
+    this.pageTrigger = this.pageSubject.asObservable();
 
     this.logingSubject = new Subject<Boolean>();
     this.logingTriger = this.logingSubject.asObservable();
@@ -106,6 +111,10 @@ export class RestaurantService {
     this.logingSubject.next(flag);
   }
 
+  triggerPageChanges(): void{
+    this.pageSubject.next([this.page, this.totalPages]);
+  }
+
   getNewPage(flag: PageChoice){
     if(flag === PageChoice.PREVIOUS && this.page > 0){
       this.page--;
@@ -123,6 +132,15 @@ export class RestaurantService {
 
   setFilter(f: string): void{
     this.filter = f;
+  }
+
+  //Getters for page variables
+  getCurrentPageNumber(): number{
+    return this.page;
+  }
+
+  getTotalPagesNumber(): number{
+    return this.totalPages;
   }
 
 }

@@ -10,8 +10,10 @@
     </div>
     <div class="col md-2">
         <div class="btn-group">
-            <button class="btn" style="border: 1px solid black;" (click)="nextPage(pageChoice.PREVIOUS)">Prethodna</button>
-            <button class="btn" style="border: 1px solid black;" (click)="nextPage(pageChoice.NEXT)">Sledeca</button>
+            <button *ngIf="currentPage > 0" class="btn" style="border: 1px solid black;" (click)="nextPage(pageChoice.PREVIOUS)">Prethodna</button>
+            <button *ngIf="currentPage == 0" class="btn" style="border: 1px solid black;" (click)="nextPage(pageChoice.PREVIOUS)" disabled>Prethodna</button>
+            <button *ngIf="currentPage < totalPages-1" class="btn" style="border: 1px solid black;" (click)="nextPage(pageChoice.NEXT)">Sledeca</button>
+            <button *ngIf="currentPage >= totalPages-1" class="btn" style="border: 1px solid black;" (click)="nextPage(pageChoice.NEXT)" disabled>Sledeca</button>
         </div>
     </div>
 </div>

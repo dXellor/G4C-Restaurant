@@ -32,6 +32,7 @@ export class ListItemsComponent implements OnInit {
   getItemTable(): void{
     this.restaurantService.getAllItems().subscribe(res => {
       this.restaurantService.setTotalPages(res.totalPages);
+      this.restaurantService.triggerPageChanges();
       this.itemList = res.content;
     });
   }
@@ -40,6 +41,7 @@ export class ListItemsComponent implements OnInit {
     this.restaurantService.filterItems().subscribe(res => {
       console.log(res);
       this.restaurantService.setTotalPages(res.totalPages);
+      this.restaurantService.triggerPageChanges();
       this.itemList = res.content;
     });
   }
@@ -54,6 +56,7 @@ export class ListItemsComponent implements OnInit {
 
   sendItemToUpdateForm(item: Item): void{
     let newItem: Item = Object.assign({}, item);
+    newItem.category = Object.assign({}, item.category);
     this.restaurantService.setItemForUpdate(newItem);
   }
 
