@@ -1,9 +1,18 @@
 <div class="row">
-    <div class="col-md-6 form-inline">
+    <div *ngIf="loggedIn" class="col-md-6 form-inline">
         <!-- Bootstrap doesnt work -->
         <b>name:</b>
         <input class="form-control" [(ngModel)]="filterValue">
         <button class="btn btn-light" style="border: 1px solid black" (click)="filterItems()">Filter</button>
+    </div>
+    <div *ngIf="!loggedIn" class="col-md-6 form-inline">
+        <!-- Bootstrap doesnt work -->
+        <b>category:</b>
+        <select class="form-select" [(ngModel)]="filterCategory">
+            <option value="" selected="selected">--Choose item category--</option>
+            <option *ngFor="let c of categoryList" [value]="c.cname">{{c.cname}}</option>
+        </select><br>
+        <button class="btn btn-light" style="border: 1px solid black" (click)="filterItemsByCategory()">Filter</button>
     </div>
     <div class="col-md-3">
         

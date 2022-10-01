@@ -36,6 +36,9 @@ export class LoginFormComponent implements OnInit {
         this.message.show = true;
         this.userBind.password = '';
       }
+
+      this.restaurantService.setFilter('');
+      this.restaurantService.setCategoryFilter('');
     });
   }
 

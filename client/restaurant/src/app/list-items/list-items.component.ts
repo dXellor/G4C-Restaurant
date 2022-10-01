@@ -20,7 +20,7 @@ export class ListItemsComponent implements OnInit {
   ngOnInit(): void{    
     this.getItemTable();
     this.restaurantService.tableRefreshTrigger.subscribe(ret => {
-      if(ret === ''){
+      if(ret[0] === '' && ret[1] === ''){
         this.getItemTable();
       }else{
         this.getFilteredItemTable();

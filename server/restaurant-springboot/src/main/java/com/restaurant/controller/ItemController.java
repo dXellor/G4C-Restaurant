@@ -54,6 +54,8 @@ public class ItemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item item){
+        Category c = categoryService.getByName(item.getCategory().getCname());
+        item.setCategory(c);
         item.setId(id); //Not necessary, we are passing through whole item from frontend
         Item updatedItem = itemService.addItem(item);
 
@@ -63,6 +65,13 @@ public class ItemController {
     @RequestMapping(value = "/filter", method = RequestMethod.GET, params = "fname")
     public ResponseEntity<Page<Item>> getItemByName(Pageable pageInfo, @RequestParam String fname){
         Page<Item> items = itemService.findByName(fname, pageInfo);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/filter", method = RequestMethod.GET, params = "cname")
+    public ResponseEntity<Page<Item>> getItemByCategory(Pageable pageInfo, @RequestParam String cname){
+        Category category = categoryService.getByName(cname);
+        Page<Item> items = itemService.findByCategory(category, pageInfo);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.restaurant.service;
 
+import com.restaurant.model.Category;
 import com.restaurant.model.Item;
 import com.restaurant.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ public class ItemService {
 
     public Page<Item> findByName(String name, Pageable pageInfo){
         return itemRepository.findByNameContainingIgnoreCase(name, pageInfo);
+    }
+
+    public Page<Item> findByCategory(Category c, Pageable pageInfo){
+        return itemRepository.findByCategory(c, pageInfo);
     }
 
     private Boolean doesItemExist(Long id){

@@ -29,9 +29,10 @@ export class RestaurantService {
   private itemSubject: Subject<Item>;
 
   //Filter
-  private tableRefreshSubject: Subject<string>;
-  public tableRefreshTrigger: Observable<string>;
+  private tableRefreshSubject: Subject<string[]>;
+  public tableRefreshTrigger: Observable<string[]>;
   private filter: string;
+  private cfilter: string;
 
   //User Login/Logout trigger
   private logingSubject: Subject<Boolean>;
@@ -45,7 +46,7 @@ export class RestaurantService {
     this.itemSubject = new Subject<Item>();
     this.itemForUpdate = this.itemSubject.asObservable();
 
-    this.tableRefreshSubject = new Subject<string>();
+    this.tableRefreshSubject = new Subject<string[]>();
     this.tableRefreshTrigger = this.tableRefreshSubject.asObservable();
     this.filter = '';
 
@@ -88,7 +89,11 @@ export class RestaurantService {
     let pageParams = new HttpParams();
     pageParams = pageParams.append('page', this.page);
     pageParams = pageParams.append('size', this.size);
-    pageParams = pageParams.append('fname', this.filter);
+    if(this.filter === ''){
+      pageParams = pageParams.append('cname', this.cfilter);
+    }else{
+      pageParams = pageParams.append('fname', this.filter);
+    }
 
     return this.http.get<pagedItemInterface>(`${this.itemApiUrl}/filter`, {params: pageParams});
   }
@@ -104,7 +109,7 @@ export class RestaurantService {
   }
 
   triggerTableRefresh(): void{
-    this.tableRefreshSubject.next(this.filter);
+    this.tableRefreshSubject.next([this.filter, this.cfilter]);
   }
   
   triggerLoging(flag: Boolean): void{
@@ -132,6 +137,10 @@ export class RestaurantService {
 
   setFilter(f: string): void{
     this.filter = f;
+  }
+
+  setCategoryFilter(f: string): void{
+    this.cfilter = f;
   }
 
   //Getters for page variables

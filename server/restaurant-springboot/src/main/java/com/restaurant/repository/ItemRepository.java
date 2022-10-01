@@ -1,5 +1,6 @@
 package com.restaurant.repository;
 
+import com.restaurant.model.Category;
 import com.restaurant.model.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,4 +14,6 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long>{
 
     public Page<Item> findByNameContainingIgnoreCase(String name, Pageable pageInfo);
+
+    public Page<Item> findByCategory(Category c, Pageable pageInfo);
 }

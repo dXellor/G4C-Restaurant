@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = flag;
     });
 
-    if(localStorage.getItem('username') !== null){
+    if(localStorage.getItem('loggedIn') !== null){
       this.isLoggedIn = true;
     }
   }
@@ -27,6 +27,8 @@ export class NavbarComponent implements OnInit {
   logoutUser(){
     localStorage.removeItem('loggedIn');
     this.isLoggedIn = false;
+    this.restaurantService.setFilter('');
+    this.restaurantService.setCategoryFilter('');
     window.location.reload();
   }
 

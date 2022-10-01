@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RestaurantService } from '../restaurant.service';
 import { PageChoice } from '../models/model-pagedItem';
 import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
+import { Category } from '../models/model-category';
 
 @Component({
   selector: 'app-table-header',
@@ -10,10 +11,13 @@ import { CursorError } from '@angular/compiler/src/ml_parser/lexer';
 })
 export class TableHeaderComponent implements OnInit {
 
+  @Input() loggedIn: Boolean;
   public filterValue: string;
   public pageChoice = PageChoice;
   public totalPages: number;
   public currentPage: number;
+  public categoryList: Category[];
+  public filterCategory: string;
 
   constructor(private restaurantService: RestaurantService) {
     this.filterValue = '';
@@ -27,6 +31,10 @@ export class TableHeaderComponent implements OnInit {
       this.totalPages = ret[1];
       console.log(this.currentPage + " " + this.totalPages);
     });
+
+    this.restaurantService.getAllCategories().subscribe(res => {
+      this.categoryList = res;
+    });
   }
 
   nextPage(flag: PageChoice){
@@ -36,7 +44,12 @@ export class TableHeaderComponent implements OnInit {
   }
 
   filterItems(){
-    this.restaurantService.setFilter(this.filterValue)
+    this.restaurantService.setFilter(this.filterValue);
+    this.restaurantService.triggerTableRefresh();
+  }
+
+  filterItemsByCategory(){
+    this.restaurantService.setCategoryFilter(this.filterCategory);
     this.restaurantService.triggerTableRefresh();
   }
 }
